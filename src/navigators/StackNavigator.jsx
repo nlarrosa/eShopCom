@@ -14,6 +14,7 @@ export const StackNavigator = () => {
     <Stack.Navigator
         // initialRouteName='ProductsScreen'
         screenOptions={{
+            headerShown: false,
             cardStyle: {
                 backgroundColor: '#fff'
             },
