@@ -12,7 +12,7 @@ export const ItemProducts = ({item}) => {
         borderWidth: 3,
         justifyContent: 'center',
         alignItems:  'center',
-        backgroundColor: 'rgba(255, 255, 255, 0.15)',
+        backgroundColor: 'rgba(255, 255, 255, 0.1)',
         borderTopEndRadius: 10,
         borderBottomEndRadius: 10,
       }}>
@@ -29,7 +29,7 @@ export const ItemProducts = ({item}) => {
         />
         <View style={{ flex:3, marginLeft: 10   }}>
           <Text style={{ fontSize: 16, fontSize: 16, color: '#fff', fontWeight: 'bold' }}>{ item.name }</Text>
-          <Text style={{ fontSize: 16, fontSize: 12, color: '#fff',  }}>{ item.category }</Text>
+          <Text style={{ fontSize: 16, fontSize: 12, color: 'rgba(255,255,255, 0.5)',  }}>{ item.category }</Text>
           <Text style={{ fontSize: 16, fontSize: 14, color: '#f2058b', fontWeight: 'bold'}}>${ item.price }</Text>
         </View>
 

@@ -20,14 +20,21 @@ export const TabsNavigator = () => {
             headerShown: false,
             tabBarStyle: {
                 backgroundColor: '#000',
-                // borderTopWidth: 2,
-                borderTopColor: '#000'
+                borderTopColor: '#000',
             },
 
             tabBarLabelStyle:  {
                 fontSize: 15,
-                color: '#fff'
+                color: '#fff',
+                fontSize: 0
             },
+
+            tabBarActiveTintColor: '#f2058b',
+            tabBarLabelStyle: { textAlign: 'center' },
+            tabBarIndicatorStyle: {
+              borderBottomColor: '#C2D5A8',
+              borderBottomWidth: 2,
+            }
 
         }}
     >
@@ -40,7 +47,7 @@ export const TabsNavigator = () => {
             options={{ 
                 title:'Productos',
                 tabBarIcon: () => (
-                    <MaterialCommunityIcons name="home-circle" color={'white'} size={22}/>
+                    <MaterialCommunityIcons name="home-circle" color={'rgba(255, 255,255,0.3)'} size={28}/>
                 )
             }} 
         />
@@ -51,7 +58,7 @@ export const TabsNavigator = () => {
             options={{ 
                 title:'Mi Perfil',
                 tabBarIcon: () => (
-                    <MaterialCommunityIcons name="face-man-profile" color={'white'} size={22}/>
+                    <MaterialCommunityIcons name="face-man-profile" color={'rgba(255, 255,255,0.3)'} size={28}/>
                 )
             }} 
         />
@@ -62,7 +69,7 @@ export const TabsNavigator = () => {
             options={{ 
                 title:'Buscar',
                 tabBarIcon: () => (
-                    <MaterialCommunityIcons name="note-search" color={'white'} size={22}/>
+                    <MaterialCommunityIcons name="note-search" color={'rgba(255, 255,255,0.3)'} size={28}/>
                 )
             }} 
             

@@ -10,13 +10,7 @@ export const HomeScreen = ({ navigation }) => {
         alignItems: 'center',
         justifyContent: 'center',
     }}>
-        <Button 
-            title='Ir a Productos'
-            onPress={() => navigation.navigate('ProductsScreen', {
-                id: 1200,
-                name: 'Zapatillas'
-            })}
-        />
+        
     </View>
   )
 }
