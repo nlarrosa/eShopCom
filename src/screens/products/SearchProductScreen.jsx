@@ -2,9 +2,9 @@ import React from 'react';
 import { FlatList,View } from 'react-native';
 
 import { searchData } from '../../data/searchData';
-import { ItemProducts } from '../../components/products/ItemProducts';
+import { CustomItemSearch } from '../../components/products/CustomItemSearch';
 import { globalStyles } from '../../themes/globalThemes';
-import { InputSearch } from '../../components/products/InputSearch';
+import { CustomTextSearch } from '../../components/products/CustomTextSearch';
 
 
 export const SearchProductScreen = () => {
@@ -13,10 +13,10 @@ export const SearchProductScreen = () => {
 
   return (
     <View style={ globalStyles.container }>
-        <InputSearch />
+        <CustomTextSearch />
         <FlatList 
           data={searchData}
-          renderItem={ ({item}) => <ItemProducts item={item}/> }
+          renderItem={ ({item}) => <CustomItemSearch item={item}/> }
           keyExtractor={item => item.id}
         />
     </View>

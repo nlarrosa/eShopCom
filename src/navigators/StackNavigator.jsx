@@ -28,7 +28,6 @@ export const StackNavigator = () => {
             }
         }}
     >
-        <Stack.Screen name="LoginScreen"  component={LoginScreen} />
         <Stack.Screen name="HomeScreen"  component={HomeScreen} />
         <Stack.Screen name="ProductsScreen" component={ProductsScreen} />
         <Stack.Screen name="CheckoutScreen" component={CheckoutScreen} />

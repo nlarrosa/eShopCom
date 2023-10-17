@@ -2,7 +2,7 @@ import React from 'react'
 import { Image, Text, View } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 
-export const ItemProducts = ({item}) => {
+export const CustomItemSearch = ({item}) => {
 
   return (
       

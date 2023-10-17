@@ -3,7 +3,7 @@ import { StyleSheet, TextInput, View } from 'react-native';
 import { Feather } from '@expo/vector-icons'; 
 
 
-export const InputIcon = ({ children }) => {
+export const CustomPassInput = ({ children }) => {
   return (
     <View  style={styles.container}>
        <Feather 

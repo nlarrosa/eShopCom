@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons'; 
 
-export const InputSearch = () => {
+export const CustomTextSearch = () => {
      return (
         <View style={ styles.containerSearch }>
             <FontAwesome5 
