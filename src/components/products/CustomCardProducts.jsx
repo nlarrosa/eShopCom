@@ -6,7 +6,8 @@ import { useNavigation } from '@react-navigation/native';
 
 export const CustomCardProducts = ({itemData}) => {
 
-    const {  navigate } =  useNavigation();
+    const { navigate } =  useNavigation();
+    const photo = `../../assets/photo/products/${itemData.photo}`;
 
     return (
       <Pressable
@@ -15,7 +16,9 @@ export const CustomCardProducts = ({itemData}) => {
           backgroundColor: 'rgba(255,255,255,0.1)',
           borderRadius: 5
         }}
-        onPress={() => navigate(ProductsScreen)}
+        onPress={() => navigate('ProductsScreen', {
+          itemData,
+        })}
       >
 
         <View style={{
@@ -25,11 +28,13 @@ export const CustomCardProducts = ({itemData}) => {
         }}>
           <View>
             <Image
-              source={ itemData.photo}
+              source={require('../../assets/photo/products/zapa_1.webp')}
               style={{
                 width:'100%',
                 height: 130,
-                marginBottom:5
+                marginBottom:5,
+                borderRadius: 10,
+                resizeMode: 'contain',
               }}
             />
           </View>
@@ -37,14 +42,9 @@ export const CustomCardProducts = ({itemData}) => {
             paddingHorizontal:3,
             marginTop: 3,
           }}>
-            <Text style={{ fontSize: 16, color: '#fff', fontWeight: 'bold' }}>{ itemData.name }</Text>
-            <Text style={{ fontSize: 12, color: 'rgba(255,255,255, 0.5)',  }}>{ itemData.category }</Text>
+            <Text style={{ fontSize: 12, color: '#fff', fontWeight: 'bold' }}>{ itemData.name }</Text>
+            <Text style={{ fontSize: 12, color: 'rgba(255,255,255, 0.5)',  }}>{ itemData.categories.category}</Text>
             <Text style={{ fontSize: 18, color: '#f2058b', fontWeight: 'bold'}}>${ itemData.price }</Text>
-          </View>
-          <View>
-            <TouchableOpacity>
-              
-            </TouchableOpacity>
           </View>
         </View>
       

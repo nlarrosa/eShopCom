@@ -1,186 +1,191 @@
-import React from 'react';
-import { Image,ScrollView,Text, TouchableOpacity, View } from 'react-native';
-import { globalStyles } from '../../themes/globalThemes';
-import { MaterialIcons, AntDesign } from 'react-native-vector-icons';
+import React, { useContext, useState } from "react";
+import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { globalStyles } from "../../themes/globalThemes";
+import { MaterialIcons } from "react-native-vector-icons";
+import { Pressable } from "react-native";
+import { CustomQuantity } from "../../components/CustomQuantity";
+import { useQuantity } from "../../hooks/useQuantity";
+import { CartContext } from "../../contexts/CartContext";
 
-export const ProductsScreen = () => {
+export const ProductsScreen = ({ route }) => {
+
+  const { itemData } = route.params;
+  const [talle, setTalle] = useState(0);
+  const { quantity, restQuantity, sumQuantity } = useQuantity();
+  const { addCart, state } = useContext(CartContext);
+
+
+  const obtenerTalle = (dataTalle) => {
+    if (dataTalle == talle) {
+      return setTalle(0);
+    }
+    setTalle(dataTalle);
+  };
+
+  const addToCart = () => {
+      const data = {
+        product: itemData,
+        waist: talle,
+        qty: quantity
+      }
+
+      addCart(data);
+  }
+
+
   return (
-    
-    <View style={ globalStyles.container} >
-      <View style={{
-        flex:5,
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}>
-        <Image 
-          source={require('../../assets/photo/products/zapa_1.webp')}
+    <View style={globalStyles.container}>
+      <View
+        style={{
+          flex: 5,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Image
+          source={require("../../assets/photo/products/zapa_1.webp")}
           style={{
-            width: '100%',
-            height: '100%'
+            width: "100%",
+            height: "100%",
+            borderRadius: 10
           }}
         />
       </View>
 
-
-      <View style={{
-          flex:2,
-          marginTop: 20,
-          justifyContent: 'center',
-          // borderWidth: 1,
-          // borderColor: 'white'
-        }}
-      >
-        <Text style={{ fontSize: 18, color: '#fff', fontWeight: 'bold' }}>Nombre del producto</Text>
-        <Text style={{ fontSize: 15, color: 'rgba(255,255,255, 0.5)',  }}>category</Text>
-        <Text style={{ fontSize: 21, color: '#f2058b', fontWeight: 'bold'}}>$100.00</Text>
-      </View>
-      
-      <View 
+      <View
         style={{
-          flex:2,
-          flexDirection:'row',
-          justifyContent: 'flex-start',
-          alignItems: 'center',
+          flex: 2,
+          marginVertical: 20,
+          justifyContent: "center",
+          alignItems: 'center'
         }}
       >
-        { [36, 37, 38, 39, 40].map( (item) =>  (
-          <TouchableOpacity
+        <Text style={{ fontSize: 16, color: "rgba(255,255,255, 0.5)" }}>
+          {itemData.categories.category}
+        </Text>
+        <Text style={{ fontSize: 19, color: "#fff", fontWeight: "bold" }}>
+          {itemData.name}{" "}
+        </Text>
+        <Text style={{ fontSize: 22, color: "#f2058b", fontWeight: "bold" }}>
+          ${itemData.price}
+        </Text>
+      </View>
+
+      <View
+        style={{
+          flex: 1,
+          flexDirection: "row",
+          justifyContent: "space-evenly",
+          alignItems: "center",
+        }}
+      >
+        {[36, 37, 38, 39, 40].map((item) => (
+          <Pressable
             key={item}
+            onPress={() => obtenerTalle(item)}
             style={{
-              backgroundColor: 'rgba(255,255,255,0.2)',
+              backgroundColor:
+                item == talle
+                  ? "rgba(242, 5, 139, 0.4)"
+                  : "rgba(255,255,255,0)",
               padding: 12,
               borderWidth: 1,
-              borderColor: 'rgba(255,255,255,0.5)',
-              marginRight: 10,
+              borderColor:
+                item == talle 
+                  ? "rgba(255,255,255,1)" 
+                  : "rgba(255,255,255,0.4)",
               borderRadius: 5,
             }}
           >
-            <Text style={{ color: 'rgba(255,255,255,0.5)',}}>{ item }</Text>
-          </TouchableOpacity>
+            <Text
+              style={{
+                color:
+                  item == talle
+                    ? "rgba(255,255,255,1)"
+                    : "rgba(255,255,255,0.5)",
+              }}
+            >
+              {item}
+            </Text>
+          </Pressable>
         ))}
       </View>
 
       <View
         style={{
-          flex:1,
-          flexDirection:'row',
-          justifyContent: 'flex-start',
-          alignItems: 'center',
-          // borderWidth: 1,
-          // borderColor: 'white'
+          marginVertical: 20,
+          alignItems: "center",
         }}
       >
-      { ['#fff', '#000', '#f76caf', '#00b2bd'].map( (item) =>  (
-          <TouchableOpacity
-            key={item}
+        <View>
+          <Text
             style={{
-              backgroundColor: item,
-              borderWidth: 1,
-              borderColor: 'rgba(255,255,255,0.5)',
-              marginRight: 5,
-              borderRadius: 100,
+              fontSize: 15,
+              color: "rgba(255,255,255, 0.5)",
+              marginBottom: 5,
             }}
           >
-            <Text style={{ color: 'rgba(255,255,255,0.5)', width:30, height:30}}></Text>
-          </TouchableOpacity>
-        ))}
+            Cantidad
+          </Text>
+        </View>
+
+        <CustomQuantity 
+          quantity={quantity}
+          restQuantity={restQuantity}
+          sumQuantity={sumQuantity}
+        />
       </View>
 
-
-        <View style={{
-          alignItems: 'flex-start',
-          marginVertical: 20,
-          alignItems:'flex-start'
-        }}>
-          <View>
-          <Text style={{ fontSize: 15, color: 'rgba(255,255,255, 0.5)', marginBottom:5  }}>Cantidad</Text>
-          </View>
-          <View 
-            style={{
-              flexDirection:'row',
-              borderWidth: 1.2,
-              borderColor:'#fff',
-            }}
-          >
-            <TouchableOpacity 
-              style={{
-                alignItems: 'center',
-              }}
-            >
-              <AntDesign name='minussquare' size={28} color='#fff'/>
-            </TouchableOpacity >
-
-            <View 
-              style={{
-                alignItems: 'center',
-              }}
-            >
-              <Text style={{ color:'#fff', fontSize:19, fontWeight:'bold', marginHorizontal:12}}>0</Text>
-            </View>
-
-            <TouchableOpacity 
-              style={{
-                alignItems: 'center',
-              }}
-            >
-              <AntDesign name='plussquare' size={28} color='#fff'/>
-            </TouchableOpacity>
-          </View>
-      </View>
-
-
-      <View style={{
-        flexDirection:'row',
-      }}>
+      <View
+        style={{
+          flexDirection: "row",
+        }}
+      >
         <View
           style={{
-            flex:1,
-            justifyContent: 'center',  
+            flex: 1,
+            justifyContent: "center",
             marginTop: 10,
-            marginBottom:30
+            marginBottom: 30,
           }}
-        >  
+        >
           <TouchableOpacity
             style={{
-              backgroundColor: '#f2058b',
-              alignItems: 'center',
-              fontSize: '17',
-              fontWeight: '600',
-              color:'#fff',
-              paddingHorizontal:10,
-              paddingVertical: 10,
-              borderRadius:5,
+              backgroundColor: "#f2058b",
+              alignItems: "center",
+              fontSize: "17",
+              fontWeight: "600",
+              color: "#fff",
+              paddingHorizontal: 20,
+              paddingVertical: 15,
+              borderRadius: 5,
+              alignSelf:  'center'
             }}
-
+            onPress={addToCart}
           >
             <Text style={globalStyles.defaulTextBtn}>AGREGAR AL CARRITO</Text>
           </TouchableOpacity>
         </View>
-        
       </View>
 
-
-      <View style={{flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}> 
-          <Text style={{ fontSize:30, fontWeight:'bold', color: 'rgba(255,255,255,0.5)', marginBottom:10}}>4.8</Text>
-          <MaterialIcons name='star' color='yellow'  size={30} />
-          <Text style={{ color: 'rgba(255,255,255,0.5)'}}> | 1265 comentarios</Text>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Text
+          style={{
+            fontSize: 30,
+            fontWeight: "bold",
+            color: "rgba(255,255,255,0.5)",
+          }}
+        >
+          4.8
+        </Text>
+        <MaterialIcons name="star" color="yellow" size={30} />
       </View>
-
-
-
-
-        <View style={{
-          flex:2,
-        }}>
-          <ScrollView>
-            <Text
-              style={{ color: 'rgba(255,255,255,0.5)',  fontSize:16}}
-            >
-              Evenly distribute children within the alignment container 
-              along the main axis. The spacing between each pair of adjacent 
-            </Text>
-          </ScrollView>
-        </View>
     </View>
-  )
-}
+  );
+};

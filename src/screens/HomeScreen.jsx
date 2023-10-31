@@ -1,60 +1,93 @@
-import React from 'react'
-import { FlatList, Image, Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View, VirtualizedList } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react'
+import { FlatList, Image, Pressable, RefreshControl, ScrollView, StyleSheet, Text, TouchableOpacity, View, VirtualizedList } from 'react-native';
 import { Ionicons } from 'react-native-vector-icons';
 import { globalStyles } from '../themes/globalThemes';
 
 import { searchData } from '../data/searchData';
+import { bannersData } from '../data/bannersData';
 import { useNavigation } from '@react-navigation/native';
 import { ProductsScreen } from './products/ProductsScreen';
 import { CustomCardProducts } from '../components/products/CustomCardProducts';
+import { ProductContext } from '../contexts/ProductContext';
+import Carousel from 'react-native-new-snap-carousel';
 
 
 
 export const HomeScreen = ({ navigation }) => {
 
+  const { getProducts, state } = useContext(ProductContext);
   const { navigate } = useNavigation();
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh =  () => {
+    setRefreshing(true);
+    // USAR EL LLAMADO A UN SERVICIO API O AL CUALQUIER COSA REFRESCAR
+    setTimeout( () => {
+        setRefreshing(false);
+    }, 5000);
+  }
+
+  useEffect( () =>  {
+    getProducts();
+  }, [])
+
+  const renderBanner = (item) => {
+    return (
+      <View style= {{
+          width:380,
+          height: 450,
+          padding: 8,
+        }}
+      >
+        <Image 
+            style={{ width: '100%', height:'100%'}}
+            source={item.photo}
+        />
+
+      </View>
+    )
+  }
+
   return (
     <View style={globalStyles.container}>
 
       <View style={styles.headContainer}>
           <View style={styles.head}>
-            <View style={{
-              // flexDirection: 'row',
-            }}>
+            <View>
               <View style={styles.menuContainer}>
                 <TouchableOpacity  >
                   <Ionicons name='filter-sharp'  size={28} color='#ccc'/>
                 </TouchableOpacity>
               </View>
-              {/* <View style={{
-                flex: 1,
-                backgroundColor: 'rgba(255,255,255, 0.1)',
-                justifyContent: 'center',
-                alignItems: 'center',
-                marginHorizontal: 10,
-                borderRadius: 10,
-                padding: 10
-              }}>
-                <TouchableOpacity  style={styles.menuBtn}>
-                  <SimpleLineIcons name='user'  size={28} color='#ccc'/>
-                  <Text style={styles.menuBtnText}> Hombre </Text>
-                </TouchableOpacity>
-              </View> */}
             </View>
           </View>
 
-          <Image 
-            style={styles.headImage}
-            source={require('../assets/photo/banners/mujeres.jpg')}
+          <FlatList 
+            refreshControl={
+              <RefreshControl 
+                  refreshing={refreshing} 
+                  onRefresh={onRefresh}
+              />
+            }
+            data={bannersData}
+            renderItem={({item}) => renderBanner(item)}
+            keyExtractor={item => item.id}
+            horizontal={false}
           />
+
+          {/* <Carousel
+              ref={(c) => { this._carousel = c; }}
+              data={bannersData}
+              renderItem={({item}) => renderBanner(item)}
+              sliderWidth={380}
+              itemWidth={380}
+          /> */}
+
       </View>
 
       <View style={{ flex:1}}>
-        {/* <View style={globalStyles.defaultDividrTitile}>
-          <Text style={globalStyles.defaultDivideTitleText}>Ofertas del Mes</Text>
-        </View> */}
           <FlatList  
-            data={searchData}
+            data={state.products}
             renderItem={({item}) => <CustomCardProducts itemData={item}/>}
             keyExtractor={item => item.id}
             horizontal={true}
@@ -104,8 +137,7 @@ const styles  =  StyleSheet.create({
     },
 
     headImage: { 
-      flex:1, 
-      width: '100%',
+      width: 380,
       borderRadius: 15,
       opacity: 0.8,
       marginBottom: 15

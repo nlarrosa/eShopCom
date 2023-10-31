@@ -1,22 +1,25 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {AntDesign} from 'react-native-vector-icons';
 
 import { SearchProductScreen } from '../screens/products/SearchProductScreen';
 import { ProfileScreen } from '../screens/auths/ProfileScreen';
 import { StackNavigator } from './StackNavigator';
-import { Text } from 'react-native';
+import { CartContext } from '../contexts/CartContext';
+import { CheckoutScreen } from '../screens/carts/CheckoutScreen';
+
 
 
 const Tab = createBottomTabNavigator();
 
 export const TabsNavigator = () => {
 
+    const { state } = useContext(CartContext);
 
   return (
     
     <Tab.Navigator
-        
         screenOptions={{
             headerShown: false,
             tabBarStyle: {
@@ -30,20 +33,12 @@ export const TabsNavigator = () => {
                 right: 20,
                 elevation: 0,
                 height: 50,
-                // overflow: 'hidden',
-                // marginHorizontal:20,
             },
-
             tabBarLabelStyle:  {
                 fontSize: 15,
                 color: '#fff',
                 fontSize: 0
             },
-
-            tabBarIconStyle: {
-                
-            },
-
             tabBarActiveTintColor: '#f2058b',
             tabBarLabelStyle: { textAlign: 'center' },
             tabBarShowLabel: false,
@@ -55,16 +50,18 @@ export const TabsNavigator = () => {
         }}
     >
 
-        
-
         <Tab.Screen 
             name='StackNavigator' 
             component={StackNavigator}
             options={{ 
                 title:'Productos',
-                tabBarIcon: () => (
-                    <MaterialCommunityIcons name="home-circle" color={'rgba(255, 255,255,0.3)'} size={28}/>
-                    )
+                tabBarIcon: ({focused}) => (
+                    <AntDesign 
+                        name="home" 
+                        color={focused ? 'rgba(255,255,255,1)':'rgba(255,255,255,0.6)'} 
+                        size={28}
+                    />
+                )
             }} 
         />
 
@@ -73,8 +70,12 @@ export const TabsNavigator = () => {
             component={ProfileScreen}
             options={{ 
                 title:'Mi Perfil',
-                tabBarIcon: () => (
-                    <MaterialCommunityIcons name="face-man-profile" color={'rgba(255, 255,255,0.3)'} size={28}/>
+                tabBarIcon: ({focused}) => (
+                    <AntDesign 
+                        name="user" 
+                        color={focused ? 'rgba(255,255,255,1)':'rgba(255,255,255,0.6)'}  
+                        size={28}
+                    />
                 )
             }} 
         />
@@ -84,26 +85,35 @@ export const TabsNavigator = () => {
             component={SearchProductScreen}
             options={{ 
                 title:'Buscar',
-                tabBarIcon: () => (
-                    <MaterialCommunityIcons name="note-search" color={'rgba(255, 255,255,0.3)'} size={28}/>
+                tabBarIcon: ({focused}) => (
+                    <MaterialCommunityIcons 
+                        name="note-search" 
+                        color={focused ? 'rgba(255,255,255,1)':'rgba(255,255,255,0.6)'}  
+                        size={28}
+                    />
                 )
             }} 
-            
         />
 
         <Tab.Screen 
-            name='HomeScreen' 
-            component={SearchProductScreen}
+            name='CheckoutScreen' 
+            component={CheckoutScreen}
             options={{ 
-                title:'Buscar',
-                tabBarIcon: () => (
-                    <MaterialCommunityIcons name="note-search" color={'rgba(255, 255,255,0.3)'} size={28}/>
-                )
+                title:'Mi Carrito',
+                tabBarIcon: ({focused}) => (
+                    <AntDesign 
+                        name="shoppingcart" 
+                        color={focused ? 'rgba(255,255,255,1)':'rgba(255,255,255,0.6)'}  
+                        size={28}
+                    />
+                ),
+                tabBarBadge: state.cart.length ? state.cart.length:  null,
+                tabBarBadgeStyle: {
+                    backgroundColor: '#fff',
+                    fontWeight: 'bold'
+                }
             }} 
-            
         />
-
-        
     </Tab.Navigator>
   )
 }

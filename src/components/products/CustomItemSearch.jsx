@@ -22,15 +22,12 @@ export const CustomItemSearch = ({item}) => {
           }}
 
           source={ item.photo }
-          // source={{
-          //   uri:'https://banner2.cleanpng.com/20190224/xoj/kisspng-scalable-vector-graphics-computer-icons-arrow-port-fast-forward-double-right-arrows-svg-png-icon-free-5c7228d4056830.5268401115509854280222.jpg'
-          // }}
-        
         />
         <View style={{ flex:3, marginLeft: 10   }}>
-          <Text style={{ fontSize: 16, fontSize: 16, color: '#fff', fontWeight: 'bold' }}>{ item.name }</Text>
-          <Text style={{ fontSize: 16, fontSize: 12, color: 'rgba(255,255,255, 0.5)',  }}>{ item.category }</Text>
-          <Text style={{ fontSize: 16, fontSize: 14, color: '#f2058b', fontWeight: 'bold'}}>${ item.price }</Text>
+          <Text style={{ fontSize: 16, color: '#fff', fontWeight: 'bold' }}>{ item.name }</Text>
+          <Text style={{ fontSize: 12, color: 'rgba(255,255,255, 0.5)',  }}>{ item.category }</Text>
+          <Text style={{ fontSize: 14, color: '#f2058b', fontWeight: 'bold'}}>${ item.price }</Text>
+          <Text style={{ fontSize: 25, color: '#f2058b', fontWeight: 'bold'}}>{ item.id }</Text>
         </View>
 
         <View style={{ flex: 1, alignItems: 'center'}}>
