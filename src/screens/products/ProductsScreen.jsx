@@ -75,7 +75,7 @@ export const ProductsScreen = ({ route }) => {
         style={{
           flex: 1,
           flexDirection: "row",
-          justifyContent: "space-evenly",
+          justifyContent: "center",
           alignItems: "center",
         }}
       >
@@ -84,6 +84,7 @@ export const ProductsScreen = ({ route }) => {
             key={item}
             onPress={() => obtenerTalle(item)}
             style={{
+              marginHorizontal: 5,
               backgroundColor:
                 item == talle
                   ? "rgba(242, 5, 139, 0.4)"
@@ -163,7 +164,7 @@ export const ProductsScreen = ({ route }) => {
             }}
             onPress={addToCart}
           >
-            <Text style={globalStyles.defaulTextBtn}>AGREGAR AL CARRITO</Text>
+            <Text style={globalStyles.defaulTextBtn}>ADD TO CART</Text>
           </TouchableOpacity>
         </View>
       </View>

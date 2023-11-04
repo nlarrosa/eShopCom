@@ -1,9 +1,12 @@
 import React from 'react';
-import { StyleSheet, TextInput, View } from 'react-native';
+import { StyleSheet, TextInput, View, Text } from 'react-native';
 import { Feather } from '@expo/vector-icons'; 
 
 
-export const CustomPassInput = ({ children }) => {
+
+export const CustomPassInput = ({ name,  formik }) => {
+
+
   return (
     <View  style={styles.container}>
        <Feather 
@@ -17,7 +20,19 @@ export const CustomPassInput = ({ children }) => {
             style={ styles.input }
             placeholder='Password'
             placeholderTextColor={'rgba(255,255,255, 0.3)'}
+            secureTextEntry={true}
+            name={name}
+            onChangeText={(value) => formik.setFieldValue(name, value)}
         />
+        { formik.errors.password &&  (
+            <Text style={{
+                color: '#f2058b',
+                textAlign: 'center',
+                fontSize: 17
+            }}>
+                { formik.errors.password }
+            </Text>
+        )}
     </View>
   )
 }

@@ -1,23 +1,21 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { FlatList, Image, Pressable, RefreshControl, ScrollView, StyleSheet, Text, TouchableOpacity, View, VirtualizedList } from 'react-native';
+import { FlatList, Image, RefreshControl, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Ionicons } from 'react-native-vector-icons';
 import { globalStyles } from '../themes/globalThemes';
 
-import { searchData } from '../data/searchData';
 import { bannersData } from '../data/bannersData';
-import { useNavigation } from '@react-navigation/native';
-import { ProductsScreen } from './products/ProductsScreen';
 import { CustomCardProducts } from '../components/products/CustomCardProducts';
 import { ProductContext } from '../contexts/ProductContext';
 import Carousel from 'react-native-new-snap-carousel';
+import { CustomModalBottom } from '../components/CustomModalBottom';
 
 
 
 export const HomeScreen = ({ navigation }) => {
 
   const { getProducts, state } = useContext(ProductContext);
-  const { navigate } = useNavigation();
   const [refreshing, setRefreshing] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
   const onRefresh =  () => {
     setRefreshing(true);
@@ -25,11 +23,15 @@ export const HomeScreen = ({ navigation }) => {
     setTimeout( () => {
         setRefreshing(false);
     }, 5000);
+  };
+
+  const onFilter = () => {
+    setOpenModal(!openModal);
   }
 
   useEffect( () =>  {
     getProducts();
-  }, [])
+  }, []);
 
   const renderBanner = (item) => {
     return (
@@ -55,34 +57,32 @@ export const HomeScreen = ({ navigation }) => {
           <View style={styles.head}>
             <View>
               <View style={styles.menuContainer}>
-                <TouchableOpacity  >
+                <TouchableOpacity 
+                  onPress={onFilter}
+                >
                   <Ionicons name='filter-sharp'  size={28} color='#ccc'/>
                 </TouchableOpacity>
               </View>
             </View>
           </View>
 
-          <FlatList 
-            refreshControl={
-              <RefreshControl 
-                  refreshing={refreshing} 
-                  onRefresh={onRefresh}
-              />
-            }
-            data={bannersData}
-            renderItem={({item}) => renderBanner(item)}
-            keyExtractor={item => item.id}
-            horizontal={false}
-          />
-
-          {/* <Carousel
+          <Carousel
               ref={(c) => { this._carousel = c; }}
+              refreshControl={
+                <RefreshControl 
+                    refreshing={refreshing} 
+                    onRefresh={onRefresh}
+                />
+              }
               data={bannersData}
               renderItem={({item}) => renderBanner(item)}
               sliderWidth={380}
               itemWidth={380}
-          /> */}
-
+              autoplay={true}
+              loop={true}
+              firstItem={0}
+              autoplayInterval={6000}
+          />
       </View>
 
       <View style={{ flex:1}}>
@@ -93,6 +93,11 @@ export const HomeScreen = ({ navigation }) => {
             horizontal={true}
           />
       </View>
+
+      <CustomModalBottom 
+        status={openModal}
+        onPress={onFilter}
+      />
     </View>
   )
 }

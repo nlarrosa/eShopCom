@@ -13,25 +13,25 @@ export const DrawerNavigator = () => {
 
   const { state, checkToken } = useContext(AuthContext);
 
-  useEffect( () => {
-    checkToken();
-  },[])
+  // useEffect( () => {
+  //   checkToken();
+  // },[])
 
-  if(state.isLoading){
-    return (<CustomLoading />)
-  }
+  // if(state.isLoading){
+  //   return (<CustomLoading />)
+  // }
 
-  if(state.isLogged)  {
-        return (
+  // if(true)  {
+  //       return (
         
-            <Drawer.Navigator>
-                <Drawer.Screen name='Home' options={{ title: 'HOME', headerShown:false}} component={TabsNavigator} />
-                <Drawer.Screen name='Mis Pedidos' component={ProfileScreen} />
-            </Drawer.Navigator>
-      )
-  }
+  //           <Drawer.Navigator>
+  //               <Drawer.Screen name='Home' options={{ title: 'HOME', headerShown:false}} component={TabsNavigator} />
+  //               <Drawer.Screen name='Mis Pedidos' component={ProfileScreen} />
+  //           </Drawer.Navigator>
+  //     )
+  // }
 
-  if(!state.isLogged)  {
+  // if(!state.isLogged)  {
     return (
     
 
@@ -40,5 +40,5 @@ export const DrawerNavigator = () => {
             {/* <Drawer.Screen name='Mis Pedidos' component={ProfileScreen} /> */}
         </Drawer.Navigator>
   )
-}
+// }
 }
